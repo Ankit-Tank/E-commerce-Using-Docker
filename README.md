@@ -112,9 +112,9 @@ POST /api/data
 
 ## 👨‍💻 Author
 
-**Your Name**  
-Python & Backend Developer  
-GitHub: https://github.com/your-username  
+krishna Prajapat  
+
+GitHub: https://github.com/krishnaa-21  
 
 ---
 
