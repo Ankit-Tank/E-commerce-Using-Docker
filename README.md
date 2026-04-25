@@ -1,48 +1,38 @@
-```markdown
-# 🌐 Flask API Basics
+# 🚀 Flask API Basics  
 
 <p align="center">
-  <img src="https://cdn.worldvectorlogo.com/logos/flask.svg" alt="Flask Logo" width="160px"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" width="160px">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white"/>
-  <img src="https://img.shields.io/badge/REST%20API-FF6C37?style=for-the-badge&logo=postman&logoColor=white"/>
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask&logoColor=white" />
+  <img src="https://img.shields.io/badge/API-REST-green" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow" />
 </p>
 
----
-
-A beginner-friendly RESTful API built with **Flask** and **Python**.  
-Covers the fundamentals of building, routing, and testing API endpoints. 🚀
+A simple and beginner-friendly Flask REST API project demonstrating core API development concepts using Python and Flask.  
+Designed as a foundational backend project for learning and portfolio building.
 
 ---
 
 ## ✨ Features
 
-- ⚡ Lightweight and fast Flask-based REST API
-- 🔁 Supports **GET** and **POST** HTTP methods
-- 🧩 Clean and modular project structure
-- 🛡️ JSON request & response handling
-- 🐍 Pure Python — no heavy dependencies
-- 🌍 Easy to extend and deploy
+- ✅ Basic Flask server setup  
+- ✅ RESTful API endpoints (GET & POST)  
+- ✅ JSON request and response handling  
+- ✅ Clean and minimal project structure  
+- ✅ Easy to extend and customize  
 
 ---
 
 ## 📁 Project Structure
 
 ```
-flask-api-basics/
+Flask-API-Basics/
 │
-├── app.py                  # Main Flask application
-├── routes/
-│   ├── __init__.py
-│   └── api_routes.py       # All API route definitions
-├── models/
-│   └── data_model.py       # Data models / mock database
-├── requirements.txt        # Project dependencies
-├── .gitignore
+├── app.py
+├── requirements.txt
 └── README.md
 ```
 
@@ -50,73 +40,71 @@ flask-api-basics/
 
 ## ⚙️ Installation & Setup
 
-**1. Clone the repository**
 ```bash
-git clone https://github.com/yourusername/flask-api-basics.git
-cd flask-api-basics
-```
+# Clone the repository
+git clone https://github.com/your-username/Flask-API-Basics.git
 
-**2. Create a virtual environment**
-```bash
+# Navigate into the project folder
+cd Flask-API-Basics
+
+# Create virtual environment (optional but recommended)
 python -m venv venv
-source venv/bin/activate        # On Windows: venv\Scripts\activate
-```
 
-**3. Install dependencies**
-```bash
+# Activate virtual environment
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
-```
 
-**4. Run the Flask app**
-```bash
+# Run the Flask application
 python app.py
 ```
 
-> 🟢 Server running at: `http://127.0.0.1:5000`
+Server will run at:
+
+```
+http://127.0.0.1:5000/
+```
 
 ---
 
-## 🔌 Example Endpoints
+## 🔗 Example Endpoints
 
-### 📥 GET — Fetch all items
+### ✅ GET Request
 
 ```http
-GET /api/items
+GET /api/hello
 ```
 
 **Response:**
 ```json
 {
-  "status": "success",
-  "data": [
-    { "id": 1, "name": "Item One" },
-    { "id": 2, "name": "Item Two" }
-  ]
+  "message": "Hello, World!"
 }
 ```
 
 ---
 
-### 📤 POST — Create a new item
+### ✅ POST Request
 
 ```http
-POST /api/items
-Content-Type: application/json
+POST /api/data
 ```
 
-**Request Body:**
+**Request Body (JSON):**
 ```json
 {
-  "name": "New Item"
+  "name": "John"
 }
 ```
 
 **Response:**
 ```json
 {
-  "status": "created",
-  "message": "Item added successfully",
-  "item": { "id": 3, "name": "New Item" }
+  "received": "John"
 }
 ```
 
@@ -124,22 +112,10 @@ Content-Type: application/json
 
 ## 👨‍💻 Author
 
-<p align="center">
-  Made with ❤️ by <strong>Your Name</strong>
-</p>
-
-<p align="center">
-  <a href="https://github.com/yourusername">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"/>
-  </a>
-  <a href="https://linkedin.com/in/yourprofile">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
-  </a>
-</p>
+**Your Name**  
+Python & Backend Developer  
+GitHub: https://github.com/your-username  
 
 ---
 
-<p align="center">
-  ⭐ Star this repo if you found it helpful!
-</p>
-```
+⭐ If you found this project helpful, feel free to star the repository!
