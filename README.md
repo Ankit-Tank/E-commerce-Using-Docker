@@ -1,18 +1,16 @@
 ```markdown
 # 🚀 Flask API Basics
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flask/flask-original.svg" alt="Flask Logo" width="250"/>
-</div>
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask Logo" width="180"/>
+</p>
 
-<div align="center">
-
-![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-2.0+-000000?style=for-the-badge&logo=flask&logoColor=white)
-![API](https://img.shields.io/badge/API-REST-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
-
-</div>
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Flask-2.0+-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask"/>
+  <img src="https://img.shields.io/badge/API-REST-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="API"/>
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License"/>
+</p>
 
 A simple and beginner-friendly REST API built with Flask. Perfect for learning backend development fundamentals and building your first API.
 
@@ -127,7 +125,7 @@ Content-Type: application/json
 
 ---
 
-<div align="center">
+<p align="center">
   Made with ❤️ and Python
-</div>
+</p>
 ```
