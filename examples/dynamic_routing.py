@@ -15,5 +15,5 @@ def age (age):
 def product (name,price):
     return (f"product name is  {name} and price is{price}")
 
-if __name__=="__main__":
+if __name__=="__main__" :
     app.run(debug=True)
