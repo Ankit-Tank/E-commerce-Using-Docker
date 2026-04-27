@@ -26,17 +26,6 @@ Designed as a foundational backend project for learning and portfolio building.
 
 ---
 
-## 📁 Project Structure
-
-```
-Flask-API-Basics/
-│
-├── app.py
-├── requirements.txt
-└── README.md
-```
-
----
 
 ## ⚙️ Installation & Setup
 
