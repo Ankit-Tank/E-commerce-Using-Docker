@@ -57,3 +57,16 @@ def product_detail(product_id):
         return jsonify({"error": "Product not found"}), 404
 
     return jsonify(product)
+
+@app.route("/search", methods=["GET"])
+def search_products():
+    query = request.args.get("q", "").lower()
+
+    products = read_json(PRODUCTS_FILE)
+
+    results = [
+        product for product in products
+        if query in product["name"].lower()
+    ]
+
+    return jsonify(results)
