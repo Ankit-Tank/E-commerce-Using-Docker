@@ -48,3 +48,12 @@ def home():
 def get_products():
     products=read_json(PRODUCTS_FILE)
     return jsonify(products)
+
+@app.route("/product/<int:product_id>",methods=["GET"])
+def product_detail(product_id):
+    product=get_product_by_id(product_id)
+
+    if not product:
+        return jsonify({"error": "Product not found"}), 404
+
+    return jsonify(product)
