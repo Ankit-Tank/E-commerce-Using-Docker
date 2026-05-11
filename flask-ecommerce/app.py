@@ -33,3 +33,18 @@ def get_product_by_id (product_id):
 def initilization_cart():
     if "cart" not in session :
         session ["cart"]={}    
+
+# -------------------------
+# Product Routes
+# -------------------------
+
+@app.route("/")
+def home():
+    return jsonify({
+         "message": "Welcome to Flask E-Commerce API"
+    })
+
+@app.route("/products", methods=["GET"])
+def get_products():
+    products=read_json(PRODUCTS_FILE)
+    return jsonify(products)
