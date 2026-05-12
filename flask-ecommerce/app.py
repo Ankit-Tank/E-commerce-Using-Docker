@@ -93,6 +93,7 @@ def view_cart():
                 "quantity": qty,
                 "subtotal": subtotal
             })
+            
     return jsonify({
         "cart": cart_items,
         "total": total
