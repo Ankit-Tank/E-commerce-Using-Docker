@@ -103,7 +103,7 @@ POST /api/data
 
 krishna Prajapat  
 
-GitHub: https://github.com/krishnaa-21  
+# GitHub: https://github.com/krishnaa-21  
 
 ---
 
