@@ -71,7 +71,7 @@ def search_products():
 
     return jsonify(results)
 
-# -------------------------
+# ------------------------
 # Cart Routes
 # -------------------------
 
