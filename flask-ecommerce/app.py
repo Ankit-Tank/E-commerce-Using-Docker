@@ -79,5 +79,5 @@ def view_cart():
     initilization_cart()
     cart=session["cart"]
     cart_items=[]
-    total=0
+    total = 0
 
