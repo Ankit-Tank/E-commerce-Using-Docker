@@ -70,3 +70,14 @@ def search_products():
     ]
 
     return jsonify(results)
+
+# -------------------------
+# Cart Routes
+# -------------------------
+
+def view_cart():
+    initilization_cart()
+    cart=session["cart"]
+    cart_items=[]
+    total=0
+
