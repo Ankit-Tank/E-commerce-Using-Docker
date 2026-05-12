@@ -81,3 +81,22 @@ def view_cart():
     cart_items=[]
     total = 0
 
+    for product_id, qty in cart.items():
+        product = get_product_by_id(int(product_id))
+
+        if product:
+            subtotal = product["price"] * qty
+            total += subtotal
+
+            cart_items.append({
+                "product": product,
+                "quantity": qty,
+                "subtotal": subtotal
+            })
+    return jsonify({
+        "cart": cart_items,
+        "total": total
+    })
+
+
+
