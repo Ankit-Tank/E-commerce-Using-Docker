@@ -98,5 +98,41 @@ def view_cart():
         "total": total
     })
 
+@app.route("/cart/add", methods=["POST"])
+def add_to_cart():
+    initilization_cart()
+
+    data = request.json
+    product_id = data.get("product_id")
+    quantity = data.get("quantity", 1)
+
+    product = get_product_by_id(product_id)
+
+    if not product:
+        return jsonify({"error": "Product not found"}), 404
+
+    if quantity <= 0:
+        return jsonify({"error": "Invalid quantity"}), 400
+
+    if product["stock"] < quantity:
+        return jsonify({"error": "Not enough stock"}), 400
+
+    cart = session["cart"]
+
+    product_key = str(product_id)
+
+    if product_key in cart:
+        cart[product_key] += quantity
+    else:
+        cart[product_key] = quantity
+
+    session["cart"] = cart
+    session.modified = True
+
+    return jsonify({"message": "Product added to cart"})
+
+
+
+
 
 
