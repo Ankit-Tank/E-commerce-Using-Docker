@@ -58,6 +58,7 @@ def product_detail(product_id):
 
     return jsonify(product)
 
+
 @app.route("/search", methods=["GET"])
 def search_products():
     query = request.args.get("q", "").lower()
@@ -79,7 +80,7 @@ def view_cart():
     initilization_cart()
     cart=session["cart"]
     cart_items=[]
-    total = 0
+    total=0
 
     for product_id, qty in cart.items():
         product = get_product_by_id(int(product_id))
@@ -93,7 +94,6 @@ def view_cart():
                 "quantity": qty,
                 "subtotal": subtotal
             })
-            
     return jsonify({
         "cart": cart_items,
         "total": total
@@ -134,7 +134,7 @@ def add_to_cart():
 
 # -------------------------
 # Checkout
-# --------------------------
+# -------------------------
 
 @app.route("/checkout", methods=["POST"])
 def checkout():
@@ -196,7 +196,7 @@ def checkout():
         "items": order_items,
         "total": total
     }
-    
+
     orders.append(order)
     write_json(ORDERS_FILE, orders)
 
@@ -208,8 +208,7 @@ def checkout():
         "order": order
     })
 
-
-
-
-
+# -------------------------
+# Admin Routes
+# -------------------------
 
