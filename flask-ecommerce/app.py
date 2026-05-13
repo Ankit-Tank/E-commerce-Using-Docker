@@ -186,6 +186,18 @@ def checkout():
 
     write_json(PRODUCTS_FILE, products)
 
+    order = {
+        "order_id": len(orders) + 1,
+        "customer": {
+            "name": customer_name,
+            "address": address,
+            "phone": phone
+        },
+        "items": order_items,
+        "total": total
+    }
+
+
 
 
 
