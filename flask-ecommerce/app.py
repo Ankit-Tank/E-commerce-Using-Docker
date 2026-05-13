@@ -136,7 +136,17 @@ def add_to_cart():
 # Checkout
 # --------------------------
 
-if not customer_name or not address or not phone:
+@app.route("/checkout", methods=["POST"])
+def checkout():
+    initilization_cart
+
+    data = request.json
+
+    customer_name = data.get("name")
+    address = data.get("address")
+    phone = data.get("phone")
+
+    if not customer_name or not address or not phone:
         return jsonify({"error": "Missing customer details"}), 400
 
     cart = session["cart"]
@@ -160,7 +170,7 @@ if not customer_name or not address or not phone:
             return jsonify({
                 "error": f"Insufficient stock for {product['name']}"
             }), 400
-
+        
         subtotal = product["price"] * qty
         total += subtotal
 
@@ -173,6 +183,8 @@ if not customer_name or not address or not phone:
             "price": product["price"],
             "subtotal": subtotal
         })
+
+    write_json(PRODUCTS_FILE, products)
 
 
 
