@@ -150,6 +150,16 @@ if not customer_name or not address or not phone:
     order_items = []
     total = 0
 
+    for product_id, qty in cart.items():
+        product = get_product_by_id(int(product_id))
+
+        if not product:
+            continue
+
+        if qty > product["stock"]:
+            return jsonify({
+                "error": f"Insufficient stock for {product['name']}"
+            }), 400
 
 
 
