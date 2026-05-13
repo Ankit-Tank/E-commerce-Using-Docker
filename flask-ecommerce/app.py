@@ -196,6 +196,18 @@ def checkout():
         "items": order_items,
         "total": total
     }
+    
+    orders.append(order)
+    write_json(ORDERS_FILE, orders)
+
+    session["cart"] = {}
+    session.modified = True
+
+    return jsonify({
+        "message": "Order placed successfully",
+        "order": order
+    })
+
 
 
 
