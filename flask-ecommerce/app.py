@@ -136,16 +136,19 @@ def add_to_cart():
 # Checkout
 # --------------------------
 
-@app.route("/checkout", methods=["POST"])
-def checkout():
-    initialize_cart()
+if not customer_name or not address or not phone:
+        return jsonify({"error": "Missing customer details"}), 400
 
-    data = request.json
+    cart = session["cart"]
 
-    customer_name = data.get("name")
-    address = data.get("address")
-    phone = data.get("phone")
+    if not cart:
+        return jsonify({"error": "Cart is empty"}), 400
 
+    products = read_json(PRODUCTS_FILE)
+    orders = read_json(ORDERS_FILE)
+
+    order_items = []
+    total = 0
 
 
 
