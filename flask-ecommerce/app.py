@@ -136,6 +136,15 @@ def add_to_cart():
 # Checkout
 # --------------------------
 
+@app.route("/checkout", methods=["POST"])
+def checkout():
+    initialize_cart()
+
+    data = request.json
+
+    customer_name = data.get("name")
+    address = data.get("address")
+    phone = data.get("phone")
 
 
 
