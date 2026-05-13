@@ -161,6 +161,19 @@ if not customer_name or not address or not phone:
                 "error": f"Insufficient stock for {product['name']}"
             }), 400
 
+        subtotal = product["price"] * qty
+        total += subtotal
+
+        product["stock"] -= qty
+
+        order_items.append({
+            "product_id": product["id"],
+            "name": product["name"],
+            "quantity": qty,
+            "price": product["price"],
+            "subtotal": subtotal
+        })
+
 
 
 
