@@ -210,6 +210,86 @@ def checkout():
 
 # -------------------------
 # Admin Routes
-# --------------------------
+# -------------------------
+@app.route("/admin/products/add", methods=["POST"])
+def add_product():
+    data = request.json
+
+    required_fields = ["name", "price", "description", "stock"]
+
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"error": f"{field} is required"}), 400
+
+    products = read_json(PRODUCTS_FILE)
+
+    new_product = {
+        "id": len(products) + 1,
+        "name": data["name"],
+        "price": data["price"],
+        "description": data["description"],
+        "stock": data["stock"]
+    }
+
+    products.append(new_product)
+    write_json(PRODUCTS_FILE, products)
+
+    return jsonify({
+        "message": "Product added",
+        "product": new_product
+    })
 
 
+@app.route("/admin/products/edit/<int:product_id>", methods=["PUT"])
+def edit_product(product_id):
+    products = read_json(PRODUCTS_FILE)
+    data = request.json
+
+    for product in products:
+        if product["id"] == product_id:
+            product["name"] = data.get("name", product["name"])
+            product["price"] = data.get("price", product["price"])
+            product["description"] = data.get("description", product["description"])
+            product["stock"] = data.get("stock", product["stock"])
+
+            write_json(PRODUCTS_FILE, products)
+
+            return jsonify({
+                "message": "Product updated",
+                "product": product
+            })
+
+    return jsonify({"error": "Product not found"}), 404
+
+
+@app.route("/admin/products/delete/<int:product_id>", methods=["DELETE"])
+def delete_product(product_id):
+    products = read_json(PRODUCTS_FILE)
+
+    updated_products = [
+        product for product in products
+        if product["id"] != product_id
+    ]
+
+    if len(updated_products) == len(products):
+        return jsonify({"error": "Product not found"}), 404
+
+    write_json(PRODUCTS_FILE, updated_products)
+
+    return jsonify({
+        "message": "Product deleted"
+    })
+
+
+# -------------------------
+# View Orders
+# -------------------------
+
+@app.route("/orders", methods=["GET"])
+def get_orders():
+    orders = read_json(ORDERS_FILE)
+    return jsonify(orders)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
