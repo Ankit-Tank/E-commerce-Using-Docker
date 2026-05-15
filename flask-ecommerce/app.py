@@ -132,6 +132,11 @@ def add_to_cart():
 
     return jsonify({"message": "Product added to cart"})
 
+# -------------------------
+# Checkout
+# --------------------------
+
+
 
 
 
