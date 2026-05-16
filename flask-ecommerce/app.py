@@ -58,6 +58,7 @@ def product_detail(product_id):
 
     return jsonify(product)
 
+
 @app.route("/search", methods=["GET"])
 def search_products():
     query = request.args.get("q", "").lower()
@@ -79,7 +80,7 @@ def view_cart():
     initilization_cart()
     cart=session["cart"]
     cart_items=[]
-    total = 0
+    total=0
 
     for product_id, qty in cart.items():
         product = get_product_by_id(int(product_id))
@@ -93,7 +94,6 @@ def view_cart():
                 "quantity": qty,
                 "subtotal": subtotal
             })
-            
     return jsonify({
         "cart": cart_items,
         "total": total
@@ -134,11 +134,162 @@ def add_to_cart():
 
 # -------------------------
 # Checkout
-# --------------------------
+# -------------------------
+
+@app.route("/checkout", methods=["POST"])
+def checkout():
+    initilization_cart
+
+    data = request.json
+
+    customer_name = data.get("name")
+    address = data.get("address")
+    phone = data.get("phone")
+
+    if not customer_name or not address or not phone:
+        return jsonify({"error": "Missing customer details"}), 400
+
+    cart = session["cart"]
+
+    if not cart:
+        return jsonify({"error": "Cart is empty"}), 400
+
+    products = read_json(PRODUCTS_FILE)
+    orders = read_json(ORDERS_FILE)
+
+    order_items = []
+    total = 0
+
+    for product_id, qty in cart.items():
+        product = get_product_by_id(int(product_id))
+
+        if not product:
+            continue
+
+        if qty > product["stock"]:
+            return jsonify({
+                "error": f"Insufficient stock for {product['name']}"
+            }), 400
+        
+        subtotal = product["price"] * qty
+        total += subtotal
+
+        product["stock"] -= qty
+
+        order_items.append({
+            "product_id": product["id"],
+            "name": product["name"],
+            "quantity": qty,
+            "price": product["price"],
+            "subtotal": subtotal
+        })
+
+    write_json(PRODUCTS_FILE, products)
+
+    order = {
+        "order_id": len(orders) + 1,
+        "customer": {
+            "name": customer_name,
+            "address": address,
+            "phone": phone
+        },
+        "items": order_items,
+        "total": total
+    }
+
+    orders.append(order)
+    write_json(ORDERS_FILE, orders)
+
+    session["cart"] = {}
+    session.modified = True
+
+    return jsonify({
+        "message": "Order placed successfully",
+        "order": order
+    })
+
+# -------------------------
+# Admin Routes
+# -------------------------
+@app.route("/admin/products/add", methods=["POST"])
+def add_product():
+    data = request.json
+
+    required_fields = ["name", "price", "description", "stock"]
+
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"error": f"{field} is required"}), 400
+
+    products = read_json(PRODUCTS_FILE)
+
+    new_product = {
+        "id": len(products) + 1,
+        "name": data["name"],
+        "price": data["price"],
+        "description": data["description"],
+        "stock": data["stock"]
+    }
+
+    products.append(new_product)
+    write_json(PRODUCTS_FILE, products)
+
+    return jsonify({
+        "message": "Product added",
+        "product": new_product
+    })
 
 
+@app.route("/admin/products/edit/<int:product_id>", methods=["PUT"])
+def edit_product(product_id):
+    products = read_json(PRODUCTS_FILE)
+    data = request.json
+
+    for product in products:
+        if product["id"] == product_id:
+            product["name"] = data.get("name", product["name"])
+            product["price"] = data.get("price", product["price"])
+            product["description"] = data.get("description", product["description"])
+            product["stock"] = data.get("stock", product["stock"])
+
+            write_json(PRODUCTS_FILE, products)
+
+            return jsonify({
+                "message": "Product updated",
+                "product": product
+            })
+
+    return jsonify({"error": "Product not found"}), 404
 
 
+@app.route("/admin/products/delete/<int:product_id>", methods=["DELETE"])
+def delete_product(product_id):
+    products = read_json(PRODUCTS_FILE)
+
+    updated_products = [
+        product for product in products
+        if product["id"] != product_id
+    ]
+
+    if len(updated_products) == len(products):
+        return jsonify({"error": "Product not found"}), 404
+
+    write_json(PRODUCTS_FILE, updated_products)
+
+    return jsonify({
+        "message": "Product deleted"
+    })
 
 
+# -------------------------
+# View Orders
+# -------------------------
 
+@app.route("/orders", methods=["GET"])
+def get_orders():
+    orders = read_json(ORDERS_FILE)
+    return jsonify(orders)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
