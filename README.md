@@ -229,7 +229,6 @@ This project demonstrates **core API concepts** using Python and Flask, providin
 
 </div>
 
----
 
 ## 📁 Project Structure
 
