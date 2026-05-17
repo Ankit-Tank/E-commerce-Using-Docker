@@ -100,7 +100,6 @@ This project demonstrates **core API concepts** using Python and Flask, providin
 </tr>
 </table>
 
----
 
 ## ✨ Features
 
