@@ -1,0 +1,182 @@
+[
+    {
+        "id": 1,
+        "name": "Wireless Headphones",
+        "price": 79.99,
+        "description": "Premium quality wireless headphones with noise cancellation",
+        "stock": 15,
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 2,
+        "name": "Smart Watch",
+        "price": 199.99,
+        "description": "Feature-rich smartwatch with fitness tracking",
+        "stock": 8,
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 3,
+        "name": "Laptop Stand",
+        "price": 34.99,
+        "description": "Ergonomic aluminum laptop stand",
+        "stock": 25,
+        "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 4,
+        "name": "USB-C Hub",
+        "price": 49.99,
+        "description": "7-in-1 USB-C hub with multiple ports",
+        "stock": 12,
+        "image": "https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 5,
+        "name": "Wireless Mouse",
+        "price": 29.99,
+        "description": "Ergonomic wireless mouse with precision tracking",
+        "stock": 30,
+        "image": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 6,
+        "name": "Mechanical Keyboard",
+        "price": 89.99,
+        "description": "RGB mechanical keyboard with blue switches",
+        "stock": 18,
+        "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 7,
+        "name": "HD Webcam",
+        "price": 59.99,
+        "description": "1080p HD webcam with auto-focus",
+        "stock": 22,
+        "image": "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 8,
+        "name": "Phone Case",
+        "price": 19.99,
+        "description": "Durable protective phone case",
+        "stock": 50,
+        "image": "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 9,
+        "name": "Portable Charger",
+        "price": 39.99,
+        "description": "20000mAh portable power bank",
+        "stock": 35,
+        "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 10,
+        "name": "Bluetooth Speaker",
+        "price": 69.99,
+        "description": "Waterproof portable bluetooth speaker",
+        "stock": 28,
+        "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 11,
+        "name": "Gaming Mouse Pad",
+        "price": 24.99,
+        "description": "Large RGB gaming mouse pad",
+        "stock": 40,
+        "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 12,
+        "name": "LED Desk Lamp",
+        "price": 44.99,
+        "description": "Adjustable LED desk lamp with USB charging",
+        "stock": 20,
+        "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=300&fit=crop&q=80",
+        "category": "office"
+    },
+    {
+        "id": 13,
+        "name": "Laptop Backpack",
+        "price": 54.99,
+        "description": "Water-resistant laptop backpack with USB port",
+        "stock": 16,
+        "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 14,
+        "name": "Wireless Earbuds",
+        "price": 99.99,
+        "description": "True wireless earbuds with charging case",
+        "stock": 24,
+        "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 15,
+        "name": "Monitor Stand",
+        "price": 39.99,
+        "description": "Adjustable monitor stand with storage",
+        "stock": 14,
+        "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=300&fit=crop&q=80",
+        "category": "office"
+    },
+    {
+        "id": 16,
+        "name": "Cable Organizer",
+        "price": 14.99,
+        "description": "Cable management box organizer",
+        "stock": 45,
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
+        "category": "office"
+    },
+    {
+        "id": 17,
+        "name": "Tablet Stand",
+        "price": 29.99,
+        "description": "Adjustable tablet and phone stand",
+        "stock": 32,
+        "image": "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 18,
+        "name": "Desk Organizer",
+        "price": 22.99,
+        "description": "Multi-compartment desk organizer",
+        "stock": 27,
+        "image": "https://images.unsplash.com/photo-1587826080692-f439cd0b70da?w=400&h=300&fit=crop&q=80",
+        "category": "office"
+    },
+    {
+        "id": 19,
+        "name": "External SSD",
+        "price": 129.99,
+        "description": "1TB portable external SSD",
+        "stock": 11,
+        "image": "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 20,
+        "name": "Phone Holder",
+        "price": 16.99,
+        "description": "Car phone mount holder",
+        "stock": 38,
+        "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    }
+]

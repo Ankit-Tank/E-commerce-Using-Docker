@@ -1,0 +1,144 @@
+[
+    {
+        "order_id": 1,
+        "customer": {
+            "name": "Sumit Tank",
+            "address": "123 Vijaynagar, Indore,  10001",
+            "phone": "+91 (555) 123-4567"
+        },
+        "items": [
+            {
+                "product_id": 1,
+                "name": "Wireless Headphones",
+                "quantity": 2,
+                "price": 79.99,
+                "subtotal": 159.98
+            },
+            {
+                "product_id": 5,
+                "name": "Wireless Mouse",
+                "quantity": 1,
+                "price": 29.99,
+                "subtotal": 29.99
+            }
+        ],
+        "total": 189.97,
+        "status": "pending",
+        "created_at": "2024-01-15T10:30:00.000000"
+    },
+    {
+        "order_id": 2,
+        "customer": {
+            "name": "Ankit Tank",
+            "address": "456 Lotus park, Indore,  90001",
+            "phone": "+1 (555) 234-5678"
+        },
+        "items": [
+            {
+                "product_id": 2,
+                "name": "Smart Watch",
+                "quantity": 1,
+                "price": 199.99,
+                "subtotal": 199.99
+            },
+            {
+                "product_id": 10,
+                "name": "Bluetooth Speaker",
+                "quantity": 1,
+                "price": 69.99,
+                "subtotal": 69.99
+            }
+        ],
+        "total": 269.98,
+        "status": "shipped",
+        "created_at": "2024-01-14T14:20:00.000000"
+    },
+    {
+        "order_id": 3,
+        "customer": {
+            "name": "Krishna Prajapat",
+            "address": "789 Aurobindo, Indore, IL 60601",
+            "phone": "+1 (555) 345-6789"
+        },
+        "items": [
+            {
+                "product_id": 6,
+                "name": "Mechanical Keyboard",
+                "quantity": 1,
+                "price": 89.99,
+                "subtotal": 89.99
+            },
+            {
+                "product_id": 5,
+                "name": "Wireless Mouse",
+                "quantity": 1,
+                "price": 29.99,
+                "subtotal": 29.99
+            },
+            {
+                "product_id": 11,
+                "name": "Gaming Mouse Pad",
+                "quantity": 1,
+                "price": 24.99,
+                "subtotal": 24.99
+            }
+        ],
+        "total": 144.97,
+        "status": "delivered",
+        "created_at": "2024-01-13T09:15:00.000000"
+    },
+    {
+        "order_id": 4,
+        "customer": {
+            "name": "Aarav Solanki",
+            "address": "321 Housing board, Khachrod,  77001",
+            "phone": "+1 (555) 456-7890"
+        },
+        "items": [
+            {
+                "product_id": 3,
+                "name": "Laptop Stand",
+                "quantity": 2,
+                "price": 34.99,
+                "subtotal": 69.98
+            },
+            {
+                "product_id": 12,
+                "name": "LED Desk Lamp",
+                "quantity": 1,
+                "price": 44.99,
+                "subtotal": 44.99
+            }
+        ],
+        "total": 114.97,
+        "status": "processing",
+        "created_at": "2024-01-16T16:45:00.000000"
+    },
+    {
+        "order_id": 5,
+        "customer": {
+            "name": "Advik Chouhan",
+            "address": "654 Alkhapuri, Ratlam,  85001",
+            "phone": "+1 (555) 567-8901"
+        },
+        "items": [
+            {
+                "product_id": 14,
+                "name": "Wireless Earbuds",
+                "quantity": 1,
+                "price": 99.99,
+                "subtotal": 99.99
+            },
+            {
+                "product_id": 9,
+                "name": "Portable Charger",
+                "quantity": 2,
+                "price": 39.99,
+                "subtotal": 79.98
+            }
+        ],
+        "total": 179.97,
+        "status": "pending",
+        "created_at": "2024-01-17T11:30:00.000000"
+    }
+]
