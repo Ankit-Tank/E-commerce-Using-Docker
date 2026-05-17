@@ -260,5 +260,5 @@ This project demonstrates **core API concepts** using Python and Flask, providin
 ┃  ├── 🔗 API endpoints
 ┃  └── 💡 Usage examples
 ┃
-└ 📂 venv/                     # Virtual environment (optional)
+└ 📂 venv/                     # Virtual environment(optional)
    └── 🐍 Python packages
