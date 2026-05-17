@@ -171,8 +171,6 @@ This project demonstrates **core API concepts** using Python and Flask, providin
 
 </div>
 
----
-
 ## 🛠️ Tech Stack
 
 <div align="center">
