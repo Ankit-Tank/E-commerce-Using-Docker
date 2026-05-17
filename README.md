@@ -38,7 +38,6 @@
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=2D9EF7&center=true&vCenter=true&width=435&lines=Learn+Flask+API+Development;Build+RESTful+Web+Services;Master+Backend+Skills;Create+Amazing+APIs" alt="Typing SVG" />
 </div>
 
----
 
 ## 📖 About This Project
 
