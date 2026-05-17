@@ -6,6 +6,7 @@ import secrets
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)  
+
 PRODUCTS_FILE = "products.json"
 ORDERS_FILE = "orders.json"
 
@@ -90,6 +91,11 @@ def orders_page():
     """Render orders page"""
     return render_template("orders.html") if os.path.exists("templates/orders.html") else jsonify(read_json(ORDERS_FILE))
 
+@app.route("/test-images")
+def test_images():
+    """Test images page"""
+    return render_template("test_images.html")
+
 # -------------------------
 # API: Product Routes
 # -------------------------
@@ -120,37 +126,6 @@ def api_search_products():
     results = [
         product for product in products
         if query in product["name"].lower() or query in product.get("description", "").lower()
-    ]
-
-    return jsonify(results)
-
-# Keep backward compatibility
-@app.route("/products", methods=["GET"])
-def get_products():
-    """Get all products (backward compatible)"""
-    products = read_json(PRODUCTS_FILE)
-    return jsonify(products)
-
-@app.route("/product/<int:product_id>", methods=["GET"])
-def product_detail(product_id):
-    """Get product detail (backward compatible)"""
-    product = get_product_by_id(product_id)
-
-    if not product:
-        return jsonify({"error": "Product not found"}), 404
-
-    return jsonify(product)
-
-@app.route("/search", methods=["GET"])
-def search_products():
-    """Search products (backward compatible)"""
-    query = request.args.get("q", "").lower()
-
-    products = read_json(PRODUCTS_FILE)
-
-    results = [
-        product for product in products
-        if query in product["name"].lower()
     ]
 
     return jsonify(results)
@@ -285,41 +260,6 @@ def api_clear_cart():
         "cart_count": 0
     })
 
-# Keep backward compatibility
-@app.route("/cart/add", methods=["POST"])
-def add_to_cart():
-    """Add to cart (backward compatible)"""
-    initialize_cart()
-
-    data = request.json
-    product_id = data.get("product_id")
-    quantity = data.get("quantity", 1)
-
-    product = get_product_by_id(product_id)
-
-    if not product:
-        return jsonify({"error": "Product not found"}), 404
-
-    if quantity <= 0:
-        return jsonify({"error": "Invalid quantity"}), 400
-
-    cart = session["cart"]
-    product_key = str(product_id)
-    current_quantity = cart.get(product_key, 0)
-
-    if product["stock"] < (current_quantity + quantity):
-        return jsonify({"error": "Not enough stock"}), 400
-
-    if product_key in cart:
-        cart[product_key] += quantity
-    else:
-        cart[product_key] = quantity
-
-    session["cart"] = cart
-    session.modified = True
-
-    return jsonify({"message": "Product added to cart"})
-
 # -------------------------
 # API: Checkout
 # -------------------------
@@ -327,86 +267,6 @@ def add_to_cart():
 @app.route("/api/checkout", methods=["POST"])
 def api_checkout():
     """API: Checkout"""
-    initialize_cart()
-
-    data = request.json
-
-    customer_name = data.get("name")
-    address = data.get("address")
-    phone = data.get("phone")
-
-    if not customer_name or not address or not phone:
-        return jsonify({"error": "Missing customer details"}), 400
-
-    cart = session["cart"]
-
-    if not cart:
-        return jsonify({"error": "Cart is empty"}), 400
-
-    products = read_json(PRODUCTS_FILE)
-    orders = read_json(ORDERS_FILE)
-
-    order_items = []
-    total = 0
-
-    for product_id, qty in cart.items():
-        product = get_product_by_id(int(product_id))
-
-        if not product:
-            continue
-
-        if qty > product["stock"]:
-            return jsonify({
-                "error": f"Insufficient stock for {product['name']}"
-            }), 400
-
-        subtotal = product["price"] * qty
-        total += subtotal
-
-        # Update stock
-        for p in products:
-            if p["id"] == product["id"]:
-                p["stock"] -= qty
-                break
-
-        order_items.append({
-            "product_id": product["id"],
-            "name": product["name"],
-            "quantity": qty,
-            "price": product["price"],
-            "subtotal": subtotal
-        })
-
-    write_json(PRODUCTS_FILE, products)
-
-    order = {
-        "order_id": len(orders) + 1,
-        "customer": {
-            "name": customer_name,
-            "address": address,
-            "phone": phone
-        },
-        "items": order_items,
-        "total": total,
-        "status": "pending",
-        "created_at": datetime.now().isoformat()
-    }
-
-    orders.append(order)
-    write_json(ORDERS_FILE, orders)
-
-    session["cart"] = {}
-    session.modified = True
-
-    return jsonify({
-        "message": "Order placed successfully",
-        "order": order
-    })
-
-# Keep backward compatibility
-@app.route("/checkout", methods=["POST"])
-def checkout():
-    """Checkout (backward compatible)"""
     initialize_cart()
 
     data = request.json
@@ -506,6 +366,8 @@ def api_add_product():
         "price": float(data["price"]),
         "description": data["description"],
         "stock": int(data["stock"]),
+        "image": data.get("image", ""),
+        "category": data.get("category", "general"),
         "created_at": datetime.now().isoformat()
     }
 
@@ -529,6 +391,8 @@ def api_edit_product(product_id):
             product["price"] = float(data.get("price", product["price"]))
             product["description"] = data.get("description", product["description"])
             product["stock"] = int(data.get("stock", product["stock"]))
+            product["image"] = data.get("image", product.get("image", ""))
+            product["category"] = data.get("category", product.get("category", "general"))
             product["updated_at"] = datetime.now().isoformat()
 
             write_json(PRODUCTS_FILE, products)
@@ -543,77 +407,6 @@ def api_edit_product(product_id):
 @app.route("/api/admin/products/delete/<int:product_id>", methods=["DELETE"])
 def api_delete_product(product_id):
     """API: Delete product"""
-    products = read_json(PRODUCTS_FILE)
-
-    updated_products = [
-        product for product in products
-        if product["id"] != product_id
-    ]
-
-    if len(updated_products) == len(products):
-        return jsonify({"error": "Product not found"}), 404
-
-    write_json(PRODUCTS_FILE, updated_products)
-
-    return jsonify({
-        "message": "Product deleted"
-    })
-
-# Keep backward compatibility
-@app.route("/admin/products/add", methods=["POST"])
-def add_product():
-    """Add product (backward compatible)"""
-    data = request.json
-
-    required_fields = ["name", "price", "description", "stock"]
-
-    for field in required_fields:
-        if field not in data:
-            return jsonify({"error": f"{field} is required"}), 400
-
-    products = read_json(PRODUCTS_FILE)
-
-    new_product = {
-        "id": len(products) + 1,
-        "name": data["name"],
-        "price": float(data["price"]),
-        "description": data["description"],
-        "stock": int(data["stock"])
-    }
-
-    products.append(new_product)
-    write_json(PRODUCTS_FILE, products)
-
-    return jsonify({
-        "message": "Product added",
-        "product": new_product
-    })
-
-@app.route("/admin/products/edit/<int:product_id>", methods=["PUT"])
-def edit_product(product_id):
-    """Edit product (backward compatible)"""
-    products = read_json(PRODUCTS_FILE)
-    data = request.json
-
-    for product in products:
-        if product["id"] == product_id:
-            product["name"] = data.get("name", product["name"])
-            product["price"] = data.get("price", product["price"])
-            product["description"] = data.get("description", product["description"])
-            product["stock"] = data.get("stock", product["stock"])
-
-            write_json(PRODUCTS_FILE, products)
-
-            return jsonify({
-                "message": "Product updated",
-                "product": product
-            })
-
-    return jsonify({"error": "Product not found"}), 404
-
-@app.route("/admin/products/delete/<int:product_id>", methods=["DELETE"])
-def delete_product(product_id):
-    """Delete product (backward compatible)"""
     products = read_json(PRODUCTS_FILE)
 
     updated_products = [
@@ -673,7 +466,201 @@ def api_update_order_status(order_id):
     
     return jsonify({"error": "Order not found"}), 404
 
-# Keep backward compatibility
+# -------------------------
+# Backward Compatibility Routes
+# -------------------------
+
+@app.route("/products", methods=["GET"])
+def get_products():
+    """Get all products (backward compatible)"""
+    products = read_json(PRODUCTS_FILE)
+    return jsonify(products)
+
+@app.route("/product/<int:product_id>", methods=["GET"])
+def product_detail(product_id):
+    """Get product detail (backward compatible)"""
+    product = get_product_by_id(product_id)
+    if not product:
+        return jsonify({"error": "Product not found"}), 404
+    return jsonify(product)
+
+@app.route("/search", methods=["GET"])
+def search_products():
+    """Search products (backward compatible)"""
+    query = request.args.get("q", "").lower()
+    products = read_json(PRODUCTS_FILE)
+    results = [
+        product for product in products
+        if query in product["name"].lower()
+    ]
+    return jsonify(results)
+
+@app.route("/cart/add", methods=["POST"])
+def add_to_cart():
+    """Add to cart (backward compatible)"""
+    initialize_cart()
+    data = request.json
+    product_id = data.get("product_id")
+    quantity = data.get("quantity", 1)
+    product = get_product_by_id(product_id)
+
+    if not product:
+        return jsonify({"error": "Product not found"}), 404
+    if quantity <= 0:
+        return jsonify({"error": "Invalid quantity"}), 400
+
+    cart = session["cart"]
+    product_key = str(product_id)
+    current_quantity = cart.get(product_key, 0)
+
+    if product["stock"] < (current_quantity + quantity):
+        return jsonify({"error": "Not enough stock"}), 400
+
+    if product_key in cart:
+        cart[product_key] += quantity
+    else:
+        cart[product_key] = quantity
+
+    session["cart"] = cart
+    session.modified = True
+    return jsonify({"message": "Product added to cart"})
+
+@app.route("/checkout", methods=["POST"])
+def checkout():
+    """Checkout (backward compatible)"""
+    initialize_cart()
+    data = request.json
+    customer_name = data.get("name")
+    address = data.get("address")
+    phone = data.get("phone")
+
+    if not customer_name or not address or not phone:
+        return jsonify({"error": "Missing customer details"}), 400
+
+    cart = session["cart"]
+    if not cart:
+        return jsonify({"error": "Cart is empty"}), 400
+
+    products = read_json(PRODUCTS_FILE)
+    orders = read_json(ORDERS_FILE)
+    order_items = []
+    total = 0
+
+    for product_id, qty in cart.items():
+        product = get_product_by_id(int(product_id))
+        if not product:
+            continue
+        if qty > product["stock"]:
+            return jsonify({
+                "error": f"Insufficient stock for {product['name']}"
+            }), 400
+
+        subtotal = product["price"] * qty
+        total += subtotal
+
+        for p in products:
+            if p["id"] == product["id"]:
+                p["stock"] -= qty
+                break
+
+        order_items.append({
+            "product_id": product["id"],
+            "name": product["name"],
+            "quantity": qty,
+            "price": product["price"],
+            "subtotal": subtotal
+        })
+
+    write_json(PRODUCTS_FILE, products)
+
+    order = {
+        "order_id": len(orders) + 1,
+        "customer": {
+            "name": customer_name,
+            "address": address,
+            "phone": phone
+        },
+        "items": order_items,
+        "total": total,
+        "status": "pending",
+        "created_at": datetime.now().isoformat()
+    }
+
+    orders.append(order)
+    write_json(ORDERS_FILE, orders)
+    session["cart"] = {}
+    session.modified = True
+
+    return jsonify({
+        "message": "Order placed successfully",
+        "order": order
+    })
+
+@app.route("/admin/products/add", methods=["POST"])
+def add_product():
+    """Add product (backward compatible)"""
+    data = request.json
+    required_fields = ["name", "price", "description", "stock"]
+
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"error": f"{field} is required"}), 400
+
+    products = read_json(PRODUCTS_FILE)
+    new_product = {
+        "id": len(products) + 1,
+        "name": data["name"],
+        "price": float(data["price"]),
+        "description": data["description"],
+        "stock": int(data["stock"]),
+        "image": data.get("image", ""),
+        "category": data.get("category", "general")
+    }
+
+    products.append(new_product)
+    write_json(PRODUCTS_FILE, products)
+    return jsonify({
+        "message": "Product added",
+        "product": new_product
+    })
+
+@app.route("/admin/products/edit/<int:product_id>", methods=["PUT"])
+def edit_product(product_id):
+    """Edit product (backward compatible)"""
+    products = read_json(PRODUCTS_FILE)
+    data = request.json
+
+    for product in products:
+        if product["id"] == product_id:
+            product["name"] = data.get("name", product["name"])
+            product["price"] = data.get("price", product["price"])
+            product["description"] = data.get("description", product["description"])
+            product["stock"] = data.get("stock", product["stock"])
+            product["image"] = data.get("image", product.get("image", ""))
+            product["category"] = data.get("category", product.get("category", "general"))
+            write_json(PRODUCTS_FILE, products)
+            return jsonify({
+                "message": "Product updated",
+                "product": product
+            })
+
+    return jsonify({"error": "Product not found"}), 404
+
+@app.route("/admin/products/delete/<int:product_id>", methods=["DELETE"])
+def delete_product(product_id):
+    """Delete product (backward compatible)"""
+    products = read_json(PRODUCTS_FILE)
+    updated_products = [
+        product for product in products
+        if product["id"] != product_id
+    ]
+
+    if len(updated_products) == len(products):
+        return jsonify({"error": "Product not found"}), 404
+
+    write_json(PRODUCTS_FILE, updated_products)
+    return jsonify({"message": "Product deleted"})
+
 @app.route("/orders", methods=["GET"])
 def get_orders():
     """Get orders (backward compatible)"""
