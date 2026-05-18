@@ -135,13 +135,13 @@ A **feature-rich full-stack e-commerce platform** combining a powerful Flask bac
   <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
   <br><sub>Browse all available products</sub>
 
-- 🔍 **Product Search**
+- 🛒 **Shopping Experience**
   <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
-  <br><sub>Find products quickly</sub>
+  <br><sub>Seamless product browsing</sub>
 
-- 👁️ **Product Details**
+- 🎨 **Frontend Interface**
   <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
-  <br><sub>Detailed product information</sub>
+  <br><sub>Modern ecommerce UI</sub>
 
 </td>
 <td width="50%">
@@ -152,9 +152,9 @@ A **feature-rich full-stack e-commerce platform** combining a powerful Flask bac
   <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
   <br><sub>View all orders</sub>
 
-- 🛒 **Place Orders**
+- 🛒 **Create Orders**
   <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
-  <br><sub>Create new orders</sub>
+  <br><sub>Place new orders</sub>
 
 - 💾 **Data Storage**
   <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
@@ -171,7 +171,7 @@ A **feature-rich full-stack e-commerce platform** combining a powerful Flask bac
 | Feature | Description | Technology | Status |
 |---------|-------------|------------|--------|
 | 🔌 **REST API** | RESTful endpoints | Flask | <img src="https://img.shields.io/badge/✓-Live-success?style=flat-square" /> |
-| 🎨 **Frontend UI** | Responsive interface | HTML/CSS/JS | <img src="https://img.shields.io/badge/✓-Live-success?style=flat-square" /> |
+| 🎨 **Frontend UI** | E-commerce interface | HTML/CSS/JS | <img src="https://img.shields.io/badge/✓-Live-success?style=flat-square" /> |
 | 🐳 **Docker Support** | Containerization | Docker | <img src="https://img.shields.io/badge/✓-Live-success?style=flat-square" /> |
 | 🔄 **CORS Enabled** | Cross-origin requests | Flask-CORS | <img src="https://img.shields.io/badge/✓-Live-success?style=flat-square" /> |
 | 📦 **JSON Storage** | Temporary data storage | JSON | <img src="https://img.shields.io/badge/✓-Live-success?style=flat-square" /> |
@@ -297,19 +297,17 @@ A **feature-rich full-stack e-commerce platform** combining a powerful Flask bac
 
 ```bash
 ecommerce-api/
-├── backend/
+├── flask-ecommerce/
 │   ├── app.py
-│   ├── data/
-│   │   ├── products.json
-│   │   └── orders.json
+│   ├── products.json
+│   ├── orders.json
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   └── .dockerignore
 │
-├── frontend/
+├── ecommerce-ui/
 │   ├── home.html
 │   ├── script.js
 │   └── style.css
 │
-├── .gitignore
 └── README.md
