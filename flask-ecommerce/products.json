@@ -178,5 +178,95 @@
         "stock": 38,
         "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=300&fit=crop&q=80",
         "category": "accessories"
+    },
+    {
+        "id": 21,
+        "name": "Noise Cancelling Headset",
+        "price": 149.99,
+        "description": "Professional noise cancelling headset for work",
+        "stock": 19,
+        "image": "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 22,
+        "name": "Webcam Light Ring",
+        "price": 35.99,
+        "description": "LED ring light for video calls and streaming",
+        "stock": 33,
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 23,
+        "name": "Ergonomic Chair Cushion",
+        "price": 42.99,
+        "description": "Memory foam cushion for office chair",
+        "stock": 26,
+        "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&q=80",
+        "category": "office"
+    },
+    {
+        "id": 24,
+        "name": "Wireless Charging Pad",
+        "price": 27.99,
+        "description": "Fast wireless charging pad for smartphones",
+        "stock": 41,
+        "image": "https://images.unsplash.com/photo-1591290619762-c588f8ab3d8c?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 25,
+        "name": "HDMI Cable 6ft",
+        "price": 12.99,
+        "description": "High-speed 4K HDMI cable",
+        "stock": 67,
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
+    },
+    {
+        "id": 26,
+        "name": "Portable Monitor",
+        "price": 189.99,
+        "description": "15.6 inch portable USB-C monitor",
+        "stock": 9,
+        "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 27,
+        "name": "Graphics Tablet",
+        "price": 74.99,
+        "description": "Digital drawing tablet with pen",
+        "stock": 17,
+        "image": "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 28,
+        "name": "Document Scanner",
+        "price": 94.99,
+        "description": "Portable document and photo scanner",
+        "stock": 13,
+        "image": "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=400&h=300&fit=crop&q=80",
+        "category": "office"
+    },
+    {
+        "id": 29,
+        "name": "Smartphone Gimbal",
+        "price": 119.99,
+        "description": "3-axis smartphone stabilizer gimbal",
+        "stock": 21,
+        "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=300&fit=crop&q=80",
+        "category": "electronics"
+    },
+    {
+        "id": 30,
+        "name": "Blue Light Glasses",
+        "price": 24.99,
+        "description": "Computer glasses with blue light filter",
+        "stock": 55,
+        "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=300&fit=crop&q=80",
+        "category": "accessories"
     }
 ]
