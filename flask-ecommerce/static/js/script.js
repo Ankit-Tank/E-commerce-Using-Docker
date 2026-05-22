@@ -1,3 +1,7 @@
+// ==========================================
+// 1. GLOBAL VARIABLES
+// ==========================================
+
 let allProducts = [];
 let cart = {};
 let currentPage = 'home';
@@ -7,23 +11,13 @@ let currentPage = 'home';
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Detect current page
     detectCurrentPage();
-    
-    // Initialize based on current page
     initializePage();
-    
-    // Update cart count on all pages
     updateCartCount();
-    
-    // Initialize navbar scroll effect
     initNavbarScroll();
-    
-    // Initialize smooth scrolling
     initSmoothScroll();
 });
 
-// Detect which page we're on
 function detectCurrentPage() {
     const path = window.location.pathname;
     
@@ -38,7 +32,6 @@ function detectCurrentPage() {
     }
 }
 
-// Initialize page-specific functionality
 function initializePage() {
     switch(currentPage) {
         case 'products':
@@ -57,10 +50,40 @@ function initializePage() {
 }
 
 // ==========================================
-// 3. NAVBAR FUNCTIONALITY
+// 3. IMAGE HANDLING FUNCTIONS
 // ==========================================
 
-// Navbar scroll effect
+function getProductImage(product) {
+    if (product.image) {
+        return product.image;
+    }
+    if (product.image_url) {
+        return product.image_url;
+    }
+    return getFallbackImage(product.name);
+}
+
+function getProductThumbnail(product) {
+    const imageUrl = getProductImage(product);
+    if (imageUrl.includes('unsplash.com')) {
+        return imageUrl.replace('w=400&h=300', 'w=150&h=150');
+    }
+    return imageUrl;
+}
+
+function getFallbackImage(productName) {
+    const initial = productName.charAt(0).toUpperCase();
+    const colors = ['667eea', '764ba2', 'f093fb', '4facfe', '43e97b'];
+    const colorIndex = productName.charCodeAt(0) % colors.length;
+    const bgColor = colors[colorIndex];
+    
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(productName)}&size=400&background=${bgColor}&color=fff&bold=true&font-size=0.4`;
+}
+
+// ==========================================
+// 4. NAVBAR FUNCTIONALITY
+// ==========================================
+
 function initNavbarScroll() {
     const navbar = document.querySelector('.navbar');
     
@@ -75,13 +98,11 @@ function initNavbarScroll() {
     }
 }
 
-// Smooth scrolling for anchor links
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             
-            // Only prevent default if it's not just "#"
             if (href !== '#') {
                 e.preventDefault();
                 const target = document.querySelector(href);
@@ -98,10 +119,9 @@ function initSmoothScroll() {
 }
 
 // ==========================================
-// 4. CART MANAGEMENT
+// 5. CART MANAGEMENT
 // ==========================================
 
-// Load cart from session storage
 function loadCart() {
     const savedCart = sessionStorage.getItem('cart');
     if (savedCart) {
@@ -115,7 +135,6 @@ function loadCart() {
     return cart;
 }
 
-// Save cart to session storage
 function saveCart() {
     try {
         sessionStorage.setItem('cart', JSON.stringify(cart));
@@ -124,7 +143,6 @@ function saveCart() {
     }
 }
 
-// Update cart count badge
 function updateCartCount() {
     loadCart();
     const count = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
@@ -132,8 +150,6 @@ function updateCartCount() {
     
     if (cartCountElement) {
         cartCountElement.textContent = count;
-        
-        // Add animation
         cartCountElement.style.transform = 'scale(1.3)';
         setTimeout(() => {
             cartCountElement.style.transform = 'scale(1)';
@@ -141,10 +157,9 @@ function updateCartCount() {
     }
 }
 
-// Add item to cart
 async function addToCart(productId, productName) {
     try {
-        const response = await fetch('/cart/add', {
+        const response = await fetch('/api/cart/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -158,7 +173,6 @@ async function addToCart(productId, productName) {
         const data = await response.json();
 
         if (response.ok) {
-            // Update local cart
             loadCart();
             if (cart[productId]) {
                 cart[productId]++;
@@ -170,7 +184,6 @@ async function addToCart(productId, productName) {
             
             showNotification(`${productName} added to cart!`, 'success');
             
-            // Add visual feedback to button
             const buttons = document.querySelectorAll(`[onclick*="addToCart(${productId}"]`);
             buttons.forEach(button => {
                 const originalText = button.innerHTML;
@@ -191,7 +204,6 @@ async function addToCart(productId, productName) {
     }
 }
 
-// Update quantity in cart
 function updateQuantity(productId, newQuantity) {
     if (newQuantity <= 0) {
         removeFromCart(productId);
@@ -216,7 +228,6 @@ function updateQuantity(productId, newQuantity) {
     updateCartCount();
 }
 
-// Remove item from cart
 function removeFromCart(productId) {
     const product = allProducts.find(p => p.id == productId);
     const productName = product ? product.name : 'Item';
@@ -233,7 +244,6 @@ function removeFromCart(productId) {
     showNotification(`${productName} removed from cart`, 'info');
 }
 
-// Clear entire cart
 function clearCart() {
     cart = {};
     saveCart();
@@ -245,13 +255,12 @@ function clearCart() {
 }
 
 // ==========================================
-// 5. HOME PAGE FUNCTIONALITY
+// 6. HOME PAGE FUNCTIONALITY
 // ==========================================
 
 function initHomePage() {
     console.log('Home page initialized');
     
-    // Add parallax effect to hero section
     const heroSection = document.querySelector('.hero-section');
     if (heroSection) {
         window.addEventListener('scroll', function() {
@@ -260,11 +269,9 @@ function initHomePage() {
         });
     }
     
-    // Animate stats on scroll
     animateStatsOnScroll();
 }
 
-// Animate stats when they come into view
 function animateStatsOnScroll() {
     const statNumbers = document.querySelectorAll('.stat-number');
     
@@ -284,7 +291,6 @@ function animateStatsOnScroll() {
     statNumbers.forEach(stat => observer.observe(stat));
 }
 
-// Animate number counting
 function animateValue(element, start, end, duration) {
     const range = end - start;
     const increment = range / (duration / 16);
@@ -302,14 +308,13 @@ function animateValue(element, start, end, duration) {
 }
 
 // ==========================================
-// 6. PRODUCTS PAGE FUNCTIONALITY
+// 7. PRODUCTS PAGE FUNCTIONALITY
 // ==========================================
 
 function initProductsPage() {
     console.log('Products page initialized');
     loadProducts();
     
-    // Initialize search functionality
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('keypress', function(e) {
@@ -318,7 +323,6 @@ function initProductsPage() {
             }
         });
         
-        // Add debounced search on input
         let searchTimeout;
         searchInput.addEventListener('input', function() {
             clearTimeout(searchTimeout);
@@ -331,10 +335,9 @@ function initProductsPage() {
     }
 }
 
-// Load all products
 async function loadProducts() {
     try {
-        const response = await fetch('/products');
+        const response = await fetch('/api/products');
         allProducts = await response.json();
         displayProducts(allProducts);
     } catch (error) {
@@ -343,7 +346,6 @@ async function loadProducts() {
     }
 }
 
-// Display products in grid
 function displayProducts(products) {
     const container = document.getElementById('products-container');
     const countElement = document.getElementById('product-count');
@@ -373,50 +375,55 @@ function displayProducts(products) {
         countElement.textContent = `${products.length} product${products.length !== 1 ? 's' : ''} found`;
     }
 
-    container.innerHTML = products.map(product => `
-        <div class="col-md-6 col-lg-4 col-xl-3 fade-in">
-            <div class="product-card">
-                <img src="https://via.placeholder.com/300x250/667eea/ffffff?text=${encodeURIComponent(product.name)}" 
-                     alt="${escapeHtml(product.name)}" 
-                     class="product-image"
-                     onerror="this.src='https://via.placeholder.com/300x250/cccccc/ffffff?text=No+Image'">
-                <div class="product-body">
-                    <h5 class="product-title" title="${escapeHtml(product.name)}">${escapeHtml(product.name)}</h5>
-                    <p class="product-description" title="${escapeHtml(product.description)}">${escapeHtml(product.description)}</p>
-                    <div class="product-footer">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="product-price">$${product.price.toFixed(2)}</span>
-                            <span class="badge ${getStockBadgeClass(product.stock)} stock-badge">
-                                ${getStockText(product.stock)}
-                            </span>
+    container.innerHTML = products.map(product => {
+        const imageUrl = getProductImage(product);
+        const fallbackUrl = getFallbackImage(product.name);
+        
+        return `
+            <div class="col-md-6 col-lg-4 col-xl-3 fade-in">
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="${imageUrl}" 
+                             alt="${escapeHtml(product.name)}" 
+                             class="product-image"
+                             loading="lazy"
+                             onerror="this.onerror=null; this.src='${fallbackUrl}';">
+                    </div>
+                    <div class="product-body">
+                        <h5 class="product-title" title="${escapeHtml(product.name)}">${escapeHtml(product.name)}</h5>
+                        <p class="product-description" title="${escapeHtml(product.description)}">${escapeHtml(product.description)}</p>
+                        <div class="product-footer">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="product-price">$${product.price.toFixed(2)}</span>
+                                <span class="badge ${getStockBadgeClass(product.stock)} stock-badge">
+                                    ${getStockText(product.stock)}
+                                </span>
+                            </div>
+                            <button class="btn btn-primary btn-add-cart" 
+                                    onclick="addToCart(${product.id}, '${escapeHtml(product.name)}')"
+                                    ${product.stock === 0 ? 'disabled' : ''}>
+                                <i class="fas fa-cart-plus me-2"></i>${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                            </button>
                         </div>
-                        <button class="btn btn-primary btn-add-cart" 
-                                onclick="addToCart(${product.id}, '${escapeHtml(product.name)}')"
-                                ${product.stock === 0 ? 'disabled' : ''}>
-                            <i class="fas fa-cart-plus me-2"></i>${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
-// Get stock badge CSS class
 function getStockBadgeClass(stock) {
     if (stock === 0) return 'bg-danger';
     if (stock <= 5) return 'bg-warning';
     return 'bg-success';
 }
 
-// Get stock text
 function getStockText(stock) {
     if (stock === 0) return 'Out of stock';
     if (stock <= 5) return `Only ${stock} left`;
     return `${stock} in stock`;
 }
 
-// Search products
 async function searchProducts() {
     const searchInput = document.getElementById('searchInput');
     if (!searchInput) return;
@@ -429,7 +436,7 @@ async function searchProducts() {
     }
 
     try {
-        const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
         const results = await response.json();
         displayProducts(results);
     } catch (error) {
@@ -438,7 +445,6 @@ async function searchProducts() {
     }
 }
 
-// Clear search
 function clearSearch() {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
@@ -447,7 +453,6 @@ function clearSearch() {
     }
 }
 
-// Show error state
 function showError() {
     const container = document.getElementById('products-container');
     if (container) {
@@ -467,7 +472,7 @@ function showError() {
 }
 
 // ==========================================
-// 7. CART PAGE FUNCTIONALITY
+// 8. CART PAGE FUNCTIONALITY
 // ==========================================
 
 function initCartPage() {
@@ -477,7 +482,6 @@ function initCartPage() {
     });
 }
 
-// Display cart items
 function displayCart() {
     const container = document.getElementById('cart-items-container');
     const checkoutBtn = document.getElementById('checkout-btn');
@@ -516,12 +520,18 @@ function displayCart() {
         if (product) {
             const itemTotal = product.price * quantity;
             subtotal += itemTotal;
+            
+            const thumbnailUrl = getProductThumbnail(product);
+            const fallbackUrl = getFallbackImage(product.name).replace('size=400', 'size=100');
 
             html += `
                 <div class="cart-item">
-                    <img src="https://via.placeholder.com/100/667eea/ffffff?text=${encodeURIComponent(product.name.substring(0, 2))}" 
-                         alt="${escapeHtml(product.name)}" 
-                         class="cart-item-image">
+                    <div class="cart-item-image-wrapper">
+                        <img src="${thumbnailUrl}" 
+                             alt="${escapeHtml(product.name)}" 
+                             class="cart-item-image"
+                             onerror="this.onerror=null; this.src='${fallbackUrl}';">
+                    </div>
                     <div class="cart-item-details">
                         <div class="cart-item-title">${escapeHtml(product.name)}</div>
                         <div class="text-muted small mb-2">${escapeHtml(product.description)}</div>
@@ -556,7 +566,6 @@ function displayCart() {
     updateCartSummary(subtotal);
 }
 
-// Update cart summary
 function updateCartSummary(subtotal) {
     const tax = subtotal * 0.10;
     const total = subtotal + tax;
@@ -571,7 +580,7 @@ function updateCartSummary(subtotal) {
 }
 
 // ==========================================
-// 8. CHECKOUT PAGE FUNCTIONALITY
+// 9. CHECKOUT PAGE FUNCTIONALITY
 // ==========================================
 
 function initCheckoutPage() {
@@ -580,7 +589,6 @@ function initCheckoutPage() {
     loadProducts().then(() => {
         loadCart();
         
-        // Check if cart is empty
         if (Object.keys(cart).length === 0) {
             window.location.href = '/cart';
             return;
@@ -591,7 +599,6 @@ function initCheckoutPage() {
     });
 }
 
-// Display order summary
 function displayOrderSummary() {
     const itemsContainer = document.getElementById('order-items');
     if (!itemsContainer) return;
@@ -630,14 +637,12 @@ function displayOrderSummary() {
     if (summaryTotal) summaryTotal.textContent = `$${total.toFixed(2)}`;
 }
 
-// Initialize checkout form
 function initCheckoutForm() {
     const form = document.getElementById('orderForm');
     if (!form) return;
     
     form.addEventListener('submit', handleCheckout);
     
-    // Add real-time validation
     const inputs = form.querySelectorAll('input, textarea');
     inputs.forEach(input => {
         input.addEventListener('blur', function() {
@@ -646,7 +651,6 @@ function initCheckoutForm() {
     });
 }
 
-// Validate form field
 function validateField(field) {
     if (field.hasAttribute('required') && !field.value.trim()) {
         field.classList.add('is-invalid');
@@ -658,14 +662,12 @@ function validateField(field) {
     }
 }
 
-// Handle checkout form submission
 async function handleCheckout(e) {
     e.preventDefault();
     
     const form = e.target;
     const submitBtn = form.querySelector('button[type="submit"]');
     
-    // Validate all fields
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     let isValid = true;
     
@@ -680,7 +682,6 @@ async function handleCheckout(e) {
         return;
     }
     
-    // Disable submit button
     const originalText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
@@ -697,7 +698,7 @@ async function handleCheckout(e) {
     const fullName = `${firstName} ${lastName}`;
 
     try {
-        const response = await fetch('/checkout', {
+        const response = await fetch('/api/checkout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -712,10 +713,8 @@ async function handleCheckout(e) {
         const data = await response.json();
 
         if (response.ok) {
-            // Clear cart
             clearCart();
 
-            // Show success message
             document.getElementById('checkout-form').style.display = 'none';
             const successMessage = document.getElementById('success-message');
             successMessage.classList.add('show');
@@ -723,15 +722,11 @@ async function handleCheckout(e) {
             document.getElementById('order-id').textContent = `#${data.order.order_id}`;
             document.getElementById('order-total').textContent = `$${data.order.total.toFixed(2)}`;
 
-            // Update step indicator
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.add('completed');
             });
 
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Confetti effect (optional)
             showConfetti();
         } else {
             submitBtn.disabled = false;
@@ -746,7 +741,6 @@ async function handleCheckout(e) {
     }
 }
 
-// Select payment method
 function selectPayment(element) {
     document.querySelectorAll('.payment-method').forEach(pm => {
         pm.classList.remove('selected');
@@ -755,9 +749,7 @@ function selectPayment(element) {
     element.querySelector('input[type="radio"]').checked = true;
 }
 
-// Show confetti effect (simple version)
 function showConfetti() {
-    // Create simple confetti effect with emojis
     const confettiCount = 50;
     const confettiChars = ['🎉', '🎊', '✨', '🎈', '🎁'];
     
@@ -781,7 +773,6 @@ function showConfetti() {
     }
 }
 
-// Add confetti animation to CSS dynamically
 if (!document.getElementById('confetti-style')) {
     const style = document.createElement('style');
     style.id = 'confetti-style';
@@ -797,11 +788,10 @@ if (!document.getElementById('confetti-style')) {
 }
 
 // ==========================================
-// 9. NOTIFICATION SYSTEM
+// 10. NOTIFICATION SYSTEM
 // ==========================================
 
 function showNotification(message, type = 'info') {
-    // Remove existing notifications
     document.querySelectorAll('.toast-notification').forEach(n => n.remove());
     
     const notification = document.createElement('div');
@@ -822,7 +812,6 @@ function showNotification(message, type = 'info') {
     
     document.body.appendChild(notification);
     
-    // Auto dismiss after 4 seconds
     setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => notification.remove(), 300);
@@ -830,17 +819,15 @@ function showNotification(message, type = 'info') {
 }
 
 // ==========================================
-// 10. UTILITY FUNCTIONS
+// 11. UTILITY FUNCTIONS
 // ==========================================
 
-// Escape HTML to prevent XSS
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Format currency
 function formatCurrency(amount) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -848,7 +835,6 @@ function formatCurrency(amount) {
     }).format(amount);
 }
 
-// Debounce function
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -861,63 +847,24 @@ function debounce(func, wait) {
     };
 }
 
-// Check if element is in viewport
-function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-
 // ==========================================
-// 11. ERROR HANDLING
+// 12. ERROR HANDLING
 // ==========================================
 
-// Global error handler
 window.addEventListener('error', function(e) {
     console.error('Global error:', e.error);
-    // You can add error reporting here
 });
 
-// Handle unhandled promise rejections
 window.addEventListener('unhandledrejection', function(e) {
     console.error('Unhandled promise rejection:', e.reason);
-    // You can add error reporting here
 });
 
 // ==========================================
-// 12. PERFORMANCE OPTIMIZATION
+// 13. KEYBOARD NAVIGATION
 // ==========================================
 
-// Lazy load images
-function lazyLoadImages() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
-
-// ==========================================
-// 13. ACCESSIBILITY ENHANCEMENTS
-// ==========================================
-
-// Add keyboard navigation for cart items
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        // Close any open modals or notifications
         const modals = document.querySelectorAll('.modal.show');
         modals.forEach(modal => {
             const bsModal = bootstrap.Modal.getInstance(modal);
@@ -927,27 +874,9 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ==========================================
-// 14. THEME TOGGLE (OPTIONAL)
+// 14. EXPORT FOR DEBUGGING
 // ==========================================
 
-function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-}
-
-// Load saved theme
-function loadTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-}
-
-// ==========================================
-// 15. EXPORT FOR CONSOLE DEBUGGING
-// ==========================================
-
-// Make functions available in console for debugging
 window.shopHub = {
     cart,
     allProducts,
@@ -957,7 +886,10 @@ window.shopHub = {
     clearCart,
     loadProducts,
     searchProducts,
-    showNotification
+    showNotification,
+    getProductImage
 };
 
-console.log('ShopHub E-Commerce initialized. Access debugging functions via window.shopHub');
+
+console.log('%c ShopHub E-Commerce Ready! ', 'background: #667eea; color: white; font-size: 16px; padding: 10px;');
+console.log('Access debugging functions via window.shopHub');
