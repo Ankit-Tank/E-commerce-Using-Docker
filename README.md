@@ -8,7 +8,7 @@ A complete full-stack e-commerce platform with Flask REST API backend and respon
 A feature-rich full-stack e-commerce platform combining a powerful Flask backend API with an intuitive frontend interface. This project demonstrates modern web development practices, RESTful API design, and containerization with Docker! 🎓
 
 <br><div align="center">
-💡 Why This Project?
+## 💡 Why This Project?
 </div><table> <tr> <td align="center" width="33%"> <img src="https://img.icons8.com/fluency/96/000000/api-settings.png" width="70px"/> <br><strong>RESTful API</strong> <br><sub>Clean architecture</sub> <br><img src="https://img.shields.io/badge/Backend-Flask-black?style=flat-square" /> </td> <td align="center" width="33%"> <img src="https://img.icons8.com/fluency/96/000000/web.png" width="70px"/> <br><strong>Modern UI</strong> <br><sub>Responsive design</sub> <br><img src="https://img.shields.io/badge/Frontend-HTML/CSS/JS-blue?style=flat-square" /> </td> <td align="center" width="33%"> <img src="https://img.icons8.com/fluency/96/000000/docker.png" width="70px"/> <br><strong>Docker Ready</strong> <br><sub>Easy deployment</sub> <br><img src="https://img.shields.io/badge/Container-Docker-2496ED?style=flat-square" /> </td> </tr> <tr> <td align="center" width="33%"> <img src="https://img.icons8.com/fluency/96/000000/code.png" width="70px"/> <br><strong>Clean Code</strong> <br><sub>Best practices</sub> <br><img src="https://img.shields.io/badge/Quality-High-success?style=flat-square" /> </td> <td align="center" width="33%"> <img src="https://img.icons8.com/fluency/96/000000/learning.png" width="70px"/> <br><strong>Educational</strong> <br><sub>Learn by doing</sub> <br><img src="https://img.shields.io/badge/Level-Intermediate-orange?style=flat-square" /> </td> <td align="center" width="33%"> <img src="https://img.icons8.com/fluency/96/000000/source-code.png" width="70px"/> <br><strong>Open Source</strong> <br><sub>MIT licensed</sub> <br><img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" /> </td> </tr> </table>
 ✨ Features
 <div align="center"><img src="https://img.shields.io/badge/Key-Features-blueviolet?style=for-the-badge&logo=star&logoColor=white" />
@@ -22,11 +22,11 @@ A feature-rich full-stack e-commerce platform combining a powerful Flask backend
 <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
 <br><sub>Browse all available products</sub>
 
-🛒 Shopping Experience
+### 🛒 Shopping Experience
 <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
 <br><sub>Seamless product browsing</sub>
 
-🎨 Frontend Interface
+### 🎨 Frontend Interface
 <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
 <br><sub>Modern ecommerce UI</sub>
 
@@ -36,11 +36,11 @@ A feature-rich full-stack e-commerce platform combining a powerful Flask backend
 <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
 <br><sub>View all orders</sub>
 
-🛒 Create Orders
+### 🛒 Create Orders
 <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
 <br><sub>Place new orders</sub>
 
-💾 Data Storage
+### 💾 Data Storage
 <br><img src="https://img.shields.io/badge/Status-✓_Active-success?style=flat-square" />
 <br><sub>JSON-based storage</sub>
 
