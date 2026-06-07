@@ -87,6 +87,7 @@ ecommerce-api/
 │   └── style.css
 │
 └── README.md
+
 <br><div align="center">
 📊 Directory Overview
 <table> <tr> <td align="center" width="25%"> <img src="https://img.icons8.com/fluency/96/000000/backend-development.png" width="60px"/> <br><strong>flask-ecommerce/</strong> <br><sub>Backend API</sub> <br><img src="https://img.shields.io/badge/Flask-API-black?style=flat-square" /> </td> <td align="center" width="25%"> <img src="https://img.icons8.com/fluency/96/000000/web.png" width="60px"/> <br><strong>ecommerce-ui/</strong> <br><sub>Frontend UI</sub> <br><img src="https://img.shields.io/badge/HTML-UI-orange?style=flat-square" /> </td> <td align="center" width="25%"> <img src="https://img.icons8.com/fluency/96/000000/database.png" width="60px"/> <br><strong>Data Files</strong> <br><sub>JSON Storage</sub> <br><img src="https://img.shields.io/badge/JSON-Data-green?style=flat-square" /> </td> <td align="center" width="25%"> <img src="https://img.icons8.com/fluency/96/000000/docker.png" width="60px"/> <br><strong>Docker</strong> <br><sub>Container Config</sub> <br><img src="https://img.shields.io/badge/Docker-Ready-blue?style=flat-square" /> </td> </tr> </table></div>
